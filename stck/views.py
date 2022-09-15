@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Artist, Song
 
 from .forms import ArtistForm
+from .forms import SongForm
 # Create your views here.
 
 def artist_list(request):
@@ -44,3 +45,28 @@ def artist_edit(request, pk):
 def artist_delete(request, pk):
     Artist.objects.get(id=pk).delete()
     return redirect('artist_list')
+
+def song_create(request):
+    if request.method == 'POST':
+        form = SongForm(request.POST)
+        if form.is_valid():
+            song=form.save()
+            return redirect('song_detail', pk=song.pk)
+    else:
+        form = SongForm()
+    return render(request, 'stck/song_form.html', {'form': form})
+
+def song_edit(request, pk):
+    song = Song.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = SongForm(request.POST, instance=song)
+        if form.is_valid():
+            song=form.save()
+            return redirect('song_detail', pk=song.pk)
+    else:
+        form = SongForm(instance=song)
+    return render(request, 'stck/song_form.html', {'form': form})
+
+def song_delete(request, pk):
+    Song.objects.get(id=pk).delete()
+    return redirect('song_list')

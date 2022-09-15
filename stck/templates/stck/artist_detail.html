@@ -1,9 +1,11 @@
 {% extends 'stck/base.html'%} {% block content%}
 
-<h2>{{artist.name}} <a href="">(edit)</a></h2>
+<h2>{{artist.name}} <a href="{% url 'artist_edit' pk=artist.pk %}">(edit)</a></h2>
 <h4>{{artist.current_country}}</h4>
 
 <img src="{{artist.photo_url}}" alt="{{artist.name}}" class="artist photo">
+<br />
+<a href="{% url 'artist_delete' pk=artist.pk %}">Delete</a>
 
 <h3>Songs <a href="">(+)</a></h3>
 

@@ -1,0 +1,26 @@
+{% extends 'stck/base.html'%} {% block content%}
+
+<h2>{{stock.name}} <a href="{% url 'stock_edit' pk=stock.pk %}">(edit)</a></h2>
+<h4>{{stock.current_amount_of_shares}}</h4>
+<h4>{{stock.price_prediction}}</h4>
+<h4>{{stock.buy_or_sell}}</h4>
+
+<br />
+<a href="{% url 'stock_delete' pk=stock.pk %}">Delete</a>
+
+<h3>Stocks <a href="">(+)</a></h3>
+
+<nav>
+    <h1>{{meta.name}} ({{ticker}})</h1>
+    <p>Description: {{meta.description}}</p>
+    <p>Open: {{price.open}}</p>
+    <p>High: {{price.high}}</p>
+    <p>Low: {{price.low}}</p>
+    <p>Close: {{price.close}}</p>
+
+</nav>
+
+{% endblock %}
+
+
+

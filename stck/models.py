@@ -1,21 +1,12 @@
 from django.db import models
 
-# Create your models here.
 
-class Artist(models.Model):
+
+class MyStocks(models.Model):
     name = models.CharField(max_length=100)
-    current_country = models.CharField(max_length=100)
-    photo_url = models.TextField()
+    current_amount_of_shares = models.CharField(max_length=100)
+    price_prediction = models.CharField(max_length=100)
+    buy_or_sell = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
-
-class Song(models.Model):
-    artist = models.ForeignKey(Artist, on_delete=models.CASCADE, related_name='songs')
-    title = models.CharField(max_length=100, default='no song title')
-    album = models.CharField(max_length=100, default='no song title')
-    preview_url = models.TextField(default='No Image')
-
-    def __str__(self):
-        return self.title
-

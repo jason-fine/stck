@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import GamePage from '../../pages/GamePage/GamePage';
+import GamePage from '../GamePage/GamePage';
 import SettingsPage from '../SettingsPage/SettingsPage';
 import HighScoresPage from '../HighScoresPage/HighScoresPage';
 import SignupPage from '../SignupPage/SignupPage';

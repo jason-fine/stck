@@ -1,20 +1,26 @@
 # from msilib.schema import _Validation_records
 from rest_framework import serializers
-from .models import Artist, Song
+# from .models import Artist, MyStocks, Song
+from .models import MyStocks
 from django.contrib.auth import get_user_model
 import django.contrib.auth.password_validation as validations
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 User = get_user_model()
 
-class ArtistSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Artist
-        fields = '__all__'
+# class ArtistSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Artist
+#         fields = '__all__'
 
-class SongSerializer(serializers.ModelSerializer):
+# class SongSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Song
+#         fields = '__all__'
+        
+class StockSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Song
+        model = MyStocks
         fields = '__all__'
 
 class UserSerializer(serializers.ModelSerializer):

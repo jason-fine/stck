@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Artist, Song
+# from .models import Artist, Song
+from .models import MyStocks
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import ArtistSerializer
-from .serializers import SongSerializer, UserSerializer
+# from .serializers import ArtistSerializer, SongSerializer
+from .serializers import UserSerializer
+from .serializers import StockSerializer
 from rest_framework.views import APIView
 from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
@@ -11,14 +13,15 @@ from django.conf import settings
 import jwt
 from stck import serializers
 from django.http import HttpResponseRedirect
-from .forms import TickerForm
+from .forms import StockForm
 from .tiingo import get_meta_data, get_price_data
 
 
 User = get_user_model()
 
-from .forms import ArtistForm
-from .forms import SongForm
+# from .forms import ArtistForm
+# from .forms import SongForm
+from .forms import StockForm
 # Create your views here.
 
 
@@ -33,10 +36,16 @@ from .forms import SongForm
 #     serializer = ArtistSerializer(artists, many = True)
 #     return Response(serializer.data)
 
-class ArtistView(APIView):
+# class ArtistView(APIView):
+#     def get(self, request):
+#         artists = Artist.objects.all()
+#         serializer = ArtistSerializer(artists, many=True)
+#         return Response(serializer.data)
+
+class MyStockView(APIView):
     def get(self, request):
-        artists = Artist.objects.all()
-        serializer = ArtistSerializer(artists, many=True)
+        stocks = MyStocks.objects.all()
+        serializer = StockSerializer(stocks, many=True)
         return Response(serializer.data)
 
 def index(request):
@@ -56,67 +65,97 @@ def ticker(request, tid):
     context['price'] = get_price_data(tid)
     return render(request, 'ticker.html',context)
 
-def song_list(request):
-    songs = Song.objects.all()
-    return render(request, 'stck/song_list.html', {'songs':songs})
+def stock_list(request):
+    stocks = MyStocks.objects.all()
+    return render(request, 'stck/stock_list.html', {'stocks':stocks})
 
-def artist_detail(request, pk):
-    artist = Artist.objects.get(id=pk)
-    return render(request, 'stck/artist_detail.html', {'artist':artist})
+# def song_list(request):
+#     songs = Song.objects.all()
+#     return render(request, 'stck/song_list.html', {'songs':songs})
 
-def song_detail(request, pk):
-    song = Song.objects.get(id=pk)
-    return render(request, 'stck/song_detail.html', {'song':song})
+def stock_detail(request, pk):
+    stock = MyStocks.objects.get(id=pk)
+    return render(request, 'stck/stock_detail.html', {'stock':stock})
 
-def artist_create(request):
+# def artist_detail(request, pk):
+#     artist = Artist.objects.get(id=pk)
+#     return render(request, 'stck/artist_detail.html', {'artist':artist})
+
+# def song_detail(request, pk):
+#     song = Song.objects.get(id=pk)
+#     return render(request, 'stck/song_detail.html', {'song':song})
+
+# def artist_create(request):
+#     if request.method == 'POST':
+#         form = ArtistForm(request.POST)
+#         if form.is_valid():
+#             artist=form.save()
+#             return redirect('artist_detail', pk=artist.pk)
+#     else:
+#         form = ArtistForm()
+#     return render(request, 'stck/artist_form.html', {'form': form})
+def stock_create(request):
     if request.method == 'POST':
-        form = ArtistForm(request.POST)
+        form = StockForm(request.POST)
         if form.is_valid():
-            artist=form.save()
-            return redirect('artist_detail', pk=artist.pk)
+            stock=form.save()
+            return redirect('stock_detail', pk=stock.pk)
     else:
-        form = ArtistForm()
-    return render(request, 'stck/artist_form.html', {'form': form})
+        form = StockForm()
+    return render(request, 'stck/stock_form.html', {'form': form})
 
-def artist_edit(request, pk):
-    artist = Artist.objects.get(pk=pk)
+# def artist_edit(request, pk):
+#     artist = Artist.objects.get(pk=pk)
+#     if request.method == 'POST':
+#         form = ArtistForm(request.POST, instance=artist)
+#         if form.is_valid():
+#             artist=form.save()
+#             return redirect('artist_detail', pk=artist.pk)
+#     else:
+#         form = ArtistForm(instance=artist)
+#     return render(request, 'stck/artist_form.html', {'form': form})
+def stock_edit(request, pk):
+    stock = MyStocks.objects.get(pk=pk)
     if request.method == 'POST':
-        form = ArtistForm(request.POST, instance=artist)
+        form = StockForm(request.POST, instance=stock)
         if form.is_valid():
-            artist=form.save()
-            return redirect('artist_detail', pk=artist.pk)
+            stock=form.save()
+            return redirect('stock_detail', pk=stock.pk)
     else:
-        form = ArtistForm(instance=artist)
-    return render(request, 'stck/artist_form.html', {'form': form})
+        form = StockForm(instance=stock)
+    return render(request, 'stck/stock_form.html', {'form': form})
 
-def artist_delete(request, pk):
-    Artist.objects.get(id=pk).delete()
-    return redirect('artist_list')
+# def artist_delete(request, pk):
+#     Artist.objects.get(id=pk).delete()
+#     return redirect('artist_list')
+def stock_delete(request, pk):
+    MyStocks.objects.get(id=pk).delete()
+    return redirect('stock_list')
 
-def song_create(request):
-    if request.method == 'POST':
-        form = SongForm(request.POST)
-        if form.is_valid():
-            song=form.save()
-            return redirect('song_detail', pk=song.pk)
-    else:
-        form = SongForm()
-    return render(request, 'stck/song_form.html', {'form': form})
+# def song_create(request):
+#     if request.method == 'POST':
+#         form = SongForm(request.POST)
+#         if form.is_valid():
+#             song=form.save()
+#             return redirect('song_detail', pk=song.pk)
+#     else:
+#         form = SongForm()
+#     return render(request, 'stck/song_form.html', {'form': form})
 
-def song_edit(request, pk):
-    song = Song.objects.get(pk=pk)
-    if request.method == 'POST':
-        form = SongForm(request.POST, instance=song)
-        if form.is_valid():
-            song=form.save()
-            return redirect('song_detail', pk=song.pk)
-    else:
-        form = SongForm(instance=song)
-    return render(request, 'stck/song_form.html', {'form': form})
+# def song_edit(request, pk):
+#     song = Song.objects.get(pk=pk)
+#     if request.method == 'POST':
+#         form = SongForm(request.POST, instance=song)
+#         if form.is_valid():
+#             song=form.save()
+#             return redirect('song_detail', pk=song.pk)
+#     else:
+#         form = SongForm(instance=song)
+#     return render(request, 'stck/song_form.html', {'form': form})
 
-def song_delete(request, pk):
-    Song.objects.get(id=pk).delete()
-    return redirect('song_list')
+# def song_delete(request, pk):
+#     Song.objects.get(id=pk).delete()
+#     return redirect('song_list')
 
 class RegisterView(APIView):
 

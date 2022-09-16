@@ -10,6 +10,10 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 import jwt
 from stck import serializers
+from django.http import HttpResponseRedirect
+from .forms import TickerForm
+from .tiingo import get_meta_data, get_price_data
+
 
 User = get_user_model()
 
@@ -35,6 +39,22 @@ class ArtistView(APIView):
         serializer = ArtistSerializer(artists, many=True)
         return Response(serializer.data)
 
+def index(request):
+    if request.method == 'POST':
+        form = TickerForm(request.POST)
+        if form.is_valid():
+            ticker=request.POST('ticker')
+            return HttpResponseRedirect(ticker)
+    else:
+        form = TickerForm()
+    return render(request, 'index.html', {'form': form})
+
+def ticker(request, tid):
+    context = {}
+    context['ticker'] = tid
+    context['meta'] = get_meta_data(tid)
+    context['price'] = get_price_data(tid)
+    return render(request, 'ticker.html',context)
 
 def song_list(request):
     songs = Song.objects.all()

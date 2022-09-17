@@ -8,20 +8,15 @@ from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 User = get_user_model()
 
-# class ArtistSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Artist
-#         fields = '__all__'
 
-# class SongSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Song
-#         fields = '__all__'
         
 class StockSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyStocks
         fields = '__all__'
+
+# class StockSerializer(serializers.HyperlinkModelSerializer):
+#     stock = serializer
 
 class UserSerializer(serializers.ModelSerializer):
 

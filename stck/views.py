@@ -6,14 +6,18 @@ from rest_framework.decorators import api_view
 # from .serializers import ArtistSerializer, SongSerializer
 from .serializers import UserSerializer
 from .serializers import StockSerializer
+from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
 from django.conf import settings
 import jwt
 from stck import serializers
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse
+from django.shortcuts import render
 from .forms import StockForm
+from .forms import TickerForm
 from .tiingo import get_meta_data, get_price_data
 
 
@@ -48,7 +52,18 @@ class MyStockView(APIView):
         serializer = StockSerializer(stocks, many=True)
         return Response(serializer.data)
 
+class StockList(generics.ListCreateAPIView):
+    queryset = MyStocks.objects.all()
+    serializer_class = StockSerializer
+
+class StockDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MyStocks.objects.all()
+    serializer_class = StockSerializer
+
 def index(request):
+    return HttpResponse("helloworld")
+
+def index_ticker(request):
     if request.method == 'POST':
         form = TickerForm(request.POST)
         if form.is_valid():
@@ -67,7 +82,9 @@ def ticker(request, tid):
 
 def stock_list(request):
     stocks = MyStocks.objects.all()
-    return render(request, 'stck/stock_list.html', {'stocks':stocks})
+    stocks_list = list(stocks)
+    return JsonResponse(stocks_list, safe=False)
+    # return render(request, 'stck/stock_list.html', {'stocks':stocks})
 
 # def song_list(request):
 #     songs = Song.objects.all()

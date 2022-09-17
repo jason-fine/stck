@@ -1,6 +1,7 @@
 # from ssl import VERIFY_ALLOW_PROXY_CERTS
 from django.urls import path
 from . import views
+from rest_framework.routers import DefaultRouter
 
 #register username: user password: djangouser
 
@@ -19,8 +20,13 @@ urlpatterns = [
     path('register/', views.RegisterView.as_view(), name='register'),
     path('login/', views.LoginView.as_view(), name='login'),
     path('', views.MyStockView.as_view(), name='stock_list'),
+
+    path('stocks/',  views.StockList.as_view(), name='stock_list'),
+    path('stocks/<int:pk>/',  views.StockDetail.as_view(), name='stock_detail'),
+
+
     # path('stocks/', views.stock_list, name='stock_list'),
-    path('stocks/<int:pk>',  views.stock_detail, name='stock_detail'),
+    # path('stocks/<int:pk>',  views.stock_detail, name='stock_detail'),
     # path('songs/<int:pk>',  views.song_detail, name='song_detail'),
     path('stocks/new', views.stock_create, name='stock_create'),
     path('stocks/<int:pk>/edit', views.stock_edit, name='stock_edit'),
@@ -28,4 +34,6 @@ urlpatterns = [
     # path('songs/new', views.song_create, name='song_create'),
     # path('songs/<int:pk>/edit', views.song_edit, name='song_edit'),
     # path('song/<int:pk>/delete', views.song_delete, name='song_delete'),
+
+    path('stockticker', views.index_ticker,name='index')
 ]

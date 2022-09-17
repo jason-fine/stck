@@ -61,7 +61,7 @@ ROOT_URLCONF = "stocks.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        # "DIRS": ['/stck/'],
+        "DIRS": ['/stck/templates/stck'],
         "DIRS": [os.path.join(BASE_DIR, 'react-stck/build')],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -140,3 +140,10 @@ CORS_ALLOWED_ORIGINS = ["http://localhost:3000",]
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'react-stck/build/static'),
 ]
+
+READ_FRAMEWORK = {
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}

@@ -3,15 +3,18 @@ import styled from 'styled-components'
 import Header from '../components/Header'
 import Navbar from '../components/Navbar'
 import SignUpPage from '../components/SignUpPage'
+import StockPage from '../components/StockPage'
+import MoveStuffAround from '../components/TickerFooter'
 
-const Register = () => {
+const Stocks= () => {
   return (
     <div>
         <Header/>
-        <Navbar/>
-        <SignUpPage/>
+        <StockPage/>
+        <MoveStuffAround/>
+
     </div>
   )
 }
 
-export default Register
+export default Stocks

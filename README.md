@@ -17,6 +17,6 @@ As a user, I want to view my current balances
 As a user, I want to see the current price and graphs of stocks I'm invested in
 
 Wireframes
-Screen Shot 2022-09-02 at 2 40 21 PM
+<img width="761" alt="Screen Shot 2022-09-02 at 2 40 21 PM" src="https://media.git.generalassemb.ly/user/36363/files/67f13fae-11bd-4624-8c8c-4b943e8a0d2f">
 
 Anything else your squad lead should know

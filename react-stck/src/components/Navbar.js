@@ -35,6 +35,7 @@ export default function App() {
                 rel="nofollow"
                 target="_blank"
                 href='http://localhost:3000/register'
+                
               >
                 Register
               </MDBBtn>

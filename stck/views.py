@@ -14,7 +14,10 @@ from django.conf import settings
 import jwt
 from stck import serializers
 from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse
+from django.shortcuts import render
 from .forms import StockForm
+from .forms import TickerForm
 from .tiingo import get_meta_data, get_price_data
 
 
@@ -58,6 +61,9 @@ class StockDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = StockSerializer
 
 def index(request):
+    return HttpResponse("helloworld")
+
+def index_ticker(request):
     if request.method == 'POST':
         form = TickerForm(request.POST)
         if form.is_valid():

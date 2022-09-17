@@ -15,8 +15,8 @@ from .models import MyStocks
 #         model=Song
 #         fields=('artist','title','preview_url', 'album')
 
-# class TickerForm(forms.Form):
-#     ticker = forms.CharField(label='Ticker', max_length=5)
+class TickerForm(forms.Form):
+    ticker = forms.CharField(label='Ticker', max_length=5)
 
 class StockForm(forms.ModelForm):
 

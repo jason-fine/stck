@@ -34,4 +34,6 @@ urlpatterns = [
     # path('songs/new', views.song_create, name='song_create'),
     # path('songs/<int:pk>/edit', views.song_edit, name='song_edit'),
     # path('song/<int:pk>/delete', views.song_delete, name='song_delete'),
+
+    path('stockticker', views.index_ticker,name='index')
 ]

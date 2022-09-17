@@ -61,7 +61,7 @@ ROOT_URLCONF = "stocks.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        # "DIRS": ['/stck/'],
+        "DIRS": ['/stck/templates/stck'],
         "DIRS": [os.path.join(BASE_DIR, 'react-stck/build')],
         "APP_DIRS": True,
         "OPTIONS": {
